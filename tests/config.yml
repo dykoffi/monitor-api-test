@@ -1,0 +1,14 @@
+config:
+  http:
+    pool: 10
+    maxSockets: 5
+    extendedMetrics: true
+  target: "http://localhost:8080"
+  phases:
+    - duration: 20
+      arrivalRate: 500
+      name: Warm up
+    - duration: 15
+      arrivalRate: 600
+      rampTo: 2000
+      name: danger

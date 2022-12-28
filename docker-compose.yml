@@ -1,0 +1,63 @@
+version: "3"
+services:
+  monitor_db_dev:
+    image: postgres:14-alpine
+    container_name: monitor_db_dev
+    environment:
+      - POSTGRES_USER=monitor_user
+      - POSTGRES_DB=monitor_db_dev
+      - POSTGRES_PASSWORD=2297
+    ports:
+      - 64431:5432
+    volumes:
+      - monitor_vol_dev:/var/lib/postgresql/data
+
+  loki:
+    image: grafana/loki:2.6.1
+    network_mode: host
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+
+  fluentd-loki:
+    image: grafana/fluent-plugin-loki
+    network_mode: host
+    environment:
+      - LOKI_URL=http://localhost:3100
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluent.conf:/fluentd/etc/fluent.conf
+
+  grafana:
+    image: grafana/grafana
+    network_mode: host
+    environment:
+      - GF_UI_SETTINGS_DEFAULT_UI_STATE_CARD_OPTIONS_MINIMAL=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./dashboards:/var/lib/grafana/dashboards
+      - grafana:/var/lib/grafana
+
+  nginx:
+    image: nginx
+    network_mode: host
+    volumes:
+      - grafana:/var/lib/grafana
+  
+  prometheus:
+    image: prom/prometheus
+    network_mode: host
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+volumes:
+  monitor_vol_dev:
+    driver: local
+  grafana:
+    driver: local

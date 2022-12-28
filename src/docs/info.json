@@ -1,0 +1,120 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "monitor",
+        "version": "1.0.0",
+        "contact": {
+            "email": "koffiedy@gmail.com",
+            "name": "KOFFI Edy",
+            "url": "https://www.linkedin.com/in/edy-koffi-948494192/"
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "id_": {
+                    "type": "integer"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "year_name": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        }
+    },
+    "inputs": {
+        "User": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "year_name": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string",
+                    "default": ""
+                }
+            }
+        }
+    },
+    "additionnalsInputs": {
+        "User": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "$ref": "#/definitions/User"
+            }
+        },
+        "responses": {
+            "ExampleError": {
+                "content": {
+                    "schema": {
+                        "type": "object",
+                        "required": [
+                            "message",
+                            "error"
+                        ],
+                        "properties": {
+                            "error": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "UnauthorizedError": {
+                "description": "UnauthorizedError",
+                "content": {
+                    "application/json": {
+                        "$ref": "#/components/responses/ExampleError/content"
+                    }
+                }
+            },
+            "InternalError": {
+                "description": "InternalError",
+                "content": {
+                    "application/json": {
+                        "$ref": "#/components/responses/ExampleError/content"
+                    }
+                }
+            },
+            "NotFoundError": {
+                "description": "NotFoundError",
+                "content": {
+                    "application/json": {
+                        "$ref": "#/components/responses/ExampleError/content"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "x-access-token"
+            }
+        }
+    }
+}

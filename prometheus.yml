@@ -1,0 +1,12 @@
+global:
+  scrape_interval: "15s"
+  scrape_timeout: "10s"
+
+scrape_configs:
+  - job_name: grafana
+    static_configs:
+      - targets: ['localhost:3000']
+
+  - job_name: monitor
+    static_configs:
+      - targets: ['localhost:8080']
