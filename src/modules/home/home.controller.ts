@@ -1,5 +1,5 @@
 import express = require("express");
-import logger from "../../utils/logger";
+import logger1 from "../../utils/logger";
 import HomeService from "./home.service";
 
 const router: express.Router = require("express").Router();
@@ -37,9 +37,9 @@ router
 
     })
 
-    /**
-    * @descr Test API endpoint
-    * @route GET /logs
-    * @access private
-    */
+/**
+* @descr Test API endpoint
+* @route GET /logs
+* @access private
+*/
 export = router;

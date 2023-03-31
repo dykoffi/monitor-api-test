@@ -1,11 +1,17 @@
-import logger from 'fluent-logger';
+// import logger1 from 'fluent-logger';
+import { FluentClient } from "@fluent-org/logger";
 
-// The 2nd argument can be omitted. Here is a default value for options.
-logger.configure('loki', {
-  host: process.env.FLUENTD_HOST,
-  port: Number(process.env.FLUENTD_PORT),
-  timeout: Number(process.env.FLUENTD_TIMEOUT),
-  reconnectInterval: Number(process.env.FLUENTD_RECONNECT_INTERVAL) // 10 minutes
+
+const logger2 = new FluentClient("gpsihm", {
+  socket: {
+    host: "35.193.85.128",
+    port: 30002,
+    timeout: 3000, // 3 seconds
+  }
 });
 
-export default logger
+logger2.emit({ level: "error", type: "SYSTEM", message: `Test 23 mars` })
+  .then(value => {
+    console.log(value);
+
+  })

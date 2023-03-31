@@ -1,6 +1,6 @@
 import express from "express";
 import onFinished from "on-finished";
-import logger from "../utils/logger";
+import logger1 from "../utils/logger";
 
 interface Options {
   excludePaths: RegExp[];
@@ -23,9 +23,9 @@ export default function (options: Options) {
     if (!isExcludePath(req.path, options.excludePaths)) {
 
       onFinished(res, async () => {
-        logger.emit("test", { level: "debug", type: "HTTP", code: res.statusCode, path: req.baseUrl, method: req.method })
+        logger1.emit("test", { level: "debug", type: "HTTP", code: res.statusCode, path: req.baseUrl, method: req.method })
       });
-      
+
     }
     next();
   };

@@ -3,7 +3,7 @@ import "./init";
 import http from "http";
 import allApp from "./_globalRoutes";
 import db from "../configs/db";
-import logger from "../utils/logger";
+import logger1 from "../utils/logger";
 
 const server = http.createServer(allApp);
 const port = normalizePort(process.env.PORT || "8080");
@@ -33,15 +33,15 @@ function onError(error: any) {
 	const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 	switch (error.code) {
 		case "EACCES":
-			logger.emit("test", { level: "error", type: "SYSTEM", message: bind + " requires elevated privileges" });
+			logger1.emit("test", { level: "error", type: "SYSTEM", message: bind + " requires elevated privileges" });
 			break;
 
 		case "EADDRINUSE":
-			logger.emit("test", { level: "error", type: "SYSTEM", message: bind + " is already in use" });
+			logger1.emit("test", { level: "error", type: "SYSTEM", message: bind + " is already in use" });
 			break;
 
 		case "ECONNRESET":
-			logger.emit("test", { level: "error", type: "SYSTEM", message: "pipe broken" });
+			logger1.emit("test", { level: "error", type: "SYSTEM", message: "pipe broken" });
 			break;
 
 		default:
@@ -59,14 +59,14 @@ function onClose() {
 function onListenning() {
 	db.$connect()
 		.then(() => {
-			logger.emit("test", { level: "info", type: "SYSTEM", message: "Database Connected" });
+			logger1.emit("test", { level: "debug", type: "SYSTEM", message: "Database Connected" });
 		})
 		.catch((err: Error) => {
-			logger.emit("test", { level: "error", type: "SYSTEM", message: `${err.name}: ${err.message}` });
+			logger1.emit("test", { level: "error", type: "SYSTEM", message: `${err.name}: ${err.message}` });
 		});
 }
 
-logger.emit("test", { level: "info", type: "SYSTEM", message: `Docs on http://localhost:${port}/docs` });
-logger.emit("test", { level: "info", type: "SYSTEM	", message: `Prometheus metrics on http://localhost:${port}/metrics` });
+logger1.emit("test", { level: "error", type: "SYSTEM", message: `Docs on http://localhost:${port}/docs` });
+logger1.emit("test", { level: "error", type: "SYSTEM	", message: `Prometheus metrics on http://localhost:${port}/metrics` });
 
 export default server;

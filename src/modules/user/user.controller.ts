@@ -1,6 +1,6 @@
 import express from "express";
 import { Prisma as PTypes } from "@prisma/client"
-import logger from "../../utils/logger";
+import logger1 from "../../utils/logger";
 import checkDTO from "../../middlewares/checkDTO";
 import userService from "./user.service"
 
@@ -25,7 +25,7 @@ router
                 res.status(201).json({ data, message: "object user created successfully" });
             })
             .catch((error: Error) => {
-                logger.emit("test", {label: "error", message: ` ${error.name}: ${error.message}`});
+                logger1.emit("test", { label: "error", message: ` ${error.name}: ${error.message}` });
                 res.status(500).json({ error: "InternalError", message: "Something wrong" });
             });
 
@@ -42,7 +42,7 @@ router
         user.getAll({ where: req.query, orderBy: { id_: "asc" } })
             .then((data) => { res.json(data); })
             .catch((error: Error) => {
-                logger.emit("test", {label: "error", message: ` ${error.name}: ${error.message}`});
+                logger1.emit("test", { label: "error", message: ` ${error.name}: ${error.message}` });
                 res.status(500).json({ error: "InternalError", message: "Something wrong" });
             });
 
@@ -61,7 +61,7 @@ router
                 res.status(data === null ? 404 : 200).json(data);
             })
             .catch((error: Error) => {
-                logger.emit("test", {label: "error", message: ` ${error.name}: ${error.message}`});
+                logger1.emit("test", { label: "error", message: ` ${error.name}: ${error.message}` });
                 res.status(500).json({ error: "InternalError", message: "Something wrong" });
             });
 
@@ -81,7 +81,7 @@ router
             })
             .catch((error: PError) => {
 
-                logger.emit("test", {label: "error", message: ` ${error.name}: ${error.message}`});
+                logger1.emit("test", { label: "error", message: ` ${error.name}: ${error.message}` });
                 if ("code" in error && error.code === "P2025") {
                     res.status(404).json({ error: "NotFound", message: error.meta });
                 } else {
@@ -105,7 +105,7 @@ router
                 res.status(201).json({ data, message: "object user deleted successfully" });
             })
             .catch((error: PError) => {
-                logger.emit("test", {label: "error", message: ` ${error.name}: ${error.message}`});
+                logger1.emit("test", { label: "error", message: ` ${error.name}: ${error.message}` });
                 if ("code" in error && error.code === "P2025") {
                     res.status(404).json({ error: error.name, message: error.meta });
                 } else {
